@@ -1,6 +1,4 @@
-Sure! Here’s a clear, simple README.md template customized for your Laravel Portfolio CRUD project based on the requirements:
 
----
 
 ````markdown
 # Laravel Portfolio CRUD Application
@@ -89,13 +87,4 @@ http://127.0.0.1:8000/projects
 * Uploaded project images are stored in the `public/images` directory.
 * Pagination is enabled to show 5 projects per page.
 * Basic Bootstrap is used for frontend styling.
-* Make sure PHP extensions like `fileinfo` and `pdo_mysql` are enabled.
-* For image uploads to work, the `public/images` directory must be writable.
 
----
-
-Feel free to customize this README with any additional info you want!
-
----
-
-If you want, I can prepare the actual `README.md` file for you to save and push. Just say so!
