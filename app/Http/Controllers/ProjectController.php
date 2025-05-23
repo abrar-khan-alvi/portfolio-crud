@@ -120,6 +120,16 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        // Optionally delete the image file
+        $imagePath = public_path('images/' . $project->image);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        $project->delete();
+
+        return redirect()->route('projects.index')->with('success', 'Project deleted successfully!');
     }
 }
