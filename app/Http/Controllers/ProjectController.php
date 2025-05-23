@@ -74,7 +74,8 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        return view('projects.edit', compact('project'));
     }
 
     /**
@@ -82,7 +83,36 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'project_url' => 'nullable|url',
+            'image' => 'nullable|image|max:2048',
+            'status' => 'required|in:draft,published',
+        ]);
+
+        $project = Project::findOrFail($id);
+
+        // Handle image upload if new file is provided
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+
+            // Optionally delete old image here if you want
+            // Storage::delete('public/images/' . $project->image);
+
+            $project->image = $imageName;
+        }
+
+        // Update other fields
+        $project->title = $request->title;
+        $project->description = $request->description;
+        $project->project_url = $request->project_url;
+        $project->status = $request->status;
+
+        $project->save();
+
+        return redirect()->route('projects.index')->with('success', 'Project updated successfully!');
     }
 
     /**

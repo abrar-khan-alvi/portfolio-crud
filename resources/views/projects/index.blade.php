@@ -13,6 +13,7 @@
     <thead>
         <tr>
             <th>Title</th>
+            <th>Description</th>
             <th>Status</th>
             <th>Project URL</th>
             <th>Image</th> <!-- Added -->
@@ -24,6 +25,7 @@
             <tr>
                 <td>{{ $project->title }}</td>
                 <td>{{ ucfirst($project->status) }}</td>
+                <td>{{ Str::limit(ucfirst($project->description), 10) }}</td>
                 <td>
                     @if($project->project_url)
                         <a href="{{ $project->project_url }}" target="_blank">Visit</a>
