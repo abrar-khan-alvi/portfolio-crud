@@ -25,9 +25,15 @@
         <tbody>
             @forelse($projects as $project)
             <tr>
-                <td>{{ $project->title }}</td>
+                <td>{{ Str::limit(ucfirst($project->title), 15) }}</td>
                 <td>{{ ucfirst($project->status) }}</td>
-                <td>{{ Str::limit(ucfirst($project->description), 10) }}</td>
+                <td>
+                    @if($project->description)
+                    {{ Str::limit(ucfirst($project->description), 10) }}
+                    @else
+                    N/A
+                    @endif
+                </td>
                 <td>
                     @if($project->project_url)
                     <a href="{{ $project->project_url }}" target="_blank">Visit</a>
@@ -60,6 +66,7 @@
             @endforelse
         </tbody>
     </table>
+    {{ $projects->links() }}
 
 
 </body>
