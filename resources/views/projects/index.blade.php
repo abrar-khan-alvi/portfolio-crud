@@ -9,41 +9,48 @@
     <h1>Projects List</h1>
 
     <a href="{{ route('projects.create') }}" class="btn btn-primary mb-3">Add New Project</a>
-
     <table class="table table-bordered">
-        <thead>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Project URL</th>
+            <th>Image</th> <!-- Added -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse($projects as $project)
             <tr>
-                <th>Title</th>
-                <th>Status</th>
-                <th>Project URL</th>
-                <th>Actions</th>
+                <td>{{ $project->title }}</td>
+                <td>{{ ucfirst($project->status) }}</td>
+                <td>
+                    @if($project->project_url)
+                        <a href="{{ $project->project_url }}" target="_blank">Visit</a>
+                    @else
+                        N/A
+                    @endif
+                </td>
+                <td>
+                    @if($project->image)
+                        <img src="{{ asset('images/' . $project->image) }}" alt="Project Image" style="max-width: 100px; max-height: 60px;">
+                    @else
+                        No Image
+                    @endif
+                </td>
+                <td>
+                    <a href="{{ route('projects.show', $project->id) }}" class="btn btn-info btn-sm">View</a>
+                    <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @forelse($projects as $project)
-                <tr>
-                    <td>{{ $project->title }}</td>
-                    <td>{{ ucfirst($project->status) }}</td>
-                    <td>
-                        @if($project->project_url)
-                            <a href="{{ $project->project_url }}" target="_blank">Visit</a>
-                        @else
-                            N/A
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route('projects.show', $project->id) }}" class="btn btn-info btn-sm">View</a>
-                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <!-- Delete will be handled later -->
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4">No projects found.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+        @empty
+            <tr>
+                <td colspan="5">No projects found.</td>
+            </tr>
+        @endforelse
+    </tbody>
+</table>
+
 
 </body>
 </html>
